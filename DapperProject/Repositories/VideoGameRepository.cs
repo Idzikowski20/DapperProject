@@ -54,6 +54,7 @@ namespace DapperProject.Repositories
                      (Title, Publisher, Developer, Platform, ReleaseDate)
                      VALUES (@Title, @Publisher, @Developer, @Platform, @ReleaseDate);
                      SELECT CAST(SCOPE_IDENTITY() as int);";
+
                 var newId = await connection.QuerySingleAsync<int>
                 (
                 query,
@@ -81,16 +82,17 @@ namespace DapperProject.Repositories
 
             using var transaction = connection.BeginTransaction();
 
+            var query = @"UPDATE VideoGames
+                SET Title = @Title,
+                    Publisher = @Publisher,
+                    Developer = @Developer,
+                    Platform = @Platform,
+                    ReleaseDate = @ReleaseDate
+                WHERE Id = @Id";
+
             try
             {
-                await connection
-                .ExecuteAsync("UPDATE VIDEOGAMES SET " +
-                    "Title = @Title," +
-                    " Publisher = @Publisher," +
-                    " Developer = @Developer," +
-                    " Platform = @Platform," +
-                    " ReleaseDate = @ReleaseDate" +
-                    " WHERE Id = @id", videoGame, transaction);
+                await connection.ExecuteAsync(query, videoGame, transaction);
 
                 transaction.Commit();
             }

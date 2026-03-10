@@ -1,19 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace DapperProject.Models
+﻿namespace DapperProject.Dtos
 {
-    public class VideoGame
+    public class UpdateVideoGameDto
     {
-        public int Id { get; set; }
-        [Required]
         public string Title { get; set; } = null!;
-        [Required]
         public string Publisher { get; set; } = null!;
-        [Required]
         public string Developer { get; set; } = null!;
-        [Required]
         public string Platform { get; set; } = null!;
-        [Required]
         public DateTime ReleaseDate { get; set; }
     }
 }

@@ -1,5 +1,9 @@
 using DapperProject.Factory;
+using DapperProject.Mappings;
 using DapperProject.Repositories;
+using DapperProject.Validators;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +14,9 @@ builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 builder.Services.AddScoped<IVideoGameRepository, VideoGameRepository>();
 builder.Services.AddScoped<IDbConnectionFactory, SqlConnectionFactory>();
+builder.Services.AddFluentValidationAutoValidation();
+builder.Services.AddValidatorsFromAssemblyContaining<CreateVideoGameDtoValidator>();
+builder.Services.AddAutoMapper(typeof(VideoGameProfile));
 
 var app = builder.Build();
 
